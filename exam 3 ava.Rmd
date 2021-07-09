@@ -1,0 +1,169 @@
+---
+title: "Exam3AVA"
+author: "ARTURO VAZQUEZ DE ANDA"
+date: "7/8/2021"
+output: pdf_document
+---
+
+1.
+#workspace cleared via following code
+rm(list = ls())
+
+2. 
+#download wdi package
+#save data frame as female_lfp
+
+install.packages('WDI')
+wbsearch("female*labor force participation" cache , new_wb_cache)
+ WDI(
+      country = "all",
+      indicator = "LFP.FEM",
+      start = 2010,
+      end = 2015,
+      extra = FALSE,
+      cache = NULL,
+      latest = NULL,
+      language = "en"
+  )
+
+
+
+3. 
+#rename variable to flfp
+
+setnames(sa_nr_collapsed, "wbsearch", "flfp")
+
+4.
+
+#collapsing data frame
+collapsed_flfp = female_flfp %>%
+group_by(country, resource, female, labor force participation, continent, female_flfp%>%summarize(female_labor force participation =mean(female_labor force participation, na.rm=TRUE))%>%dplyr::select(-c(lat_long))
+
+
+
+5.
+unable to do
+
+6. 
+
+#formulated world map and attempted to save as an image on the report
+world <- ne_countries(scale = "large", returnclass = "sf")
+world_basic = ggplot() + geom_flfp(data = world) + geom_flfp(data = final)
+print(world_basic)
+ggsave(world_basic, filename = "world_map.png", width = 6.5, height = 6)
+
+
+
+collapsed_flfp
+
+
+
+
+7.
+
+The part of the world showing the highest proportion of females participating in the labor force is in the Eastern-Southeastern region of Africa. The top countries are almost all situated in this area of the world.
+
+
+
+8.
+#making map of Africa
+
+africa <-ne_countries(continent ='africa',scale = "large",returnclass = "sf")
+africa_data = subset(final, continent=="africa")
+
+africa_map = ggplot() +
+geom_sf(data = africa) +
+geom_sf(data = africa_data, aes(shape=Resource))
+print(africa_map)
+
+
+#saving output map
+ggsave(africa_map, filename = "africa_map.png", width = 6.5, height = 6)
+
+
+
+
+9.
+
+User interface- how the app works. Also involves inputs and outputs.
+
+Server- defines how to assmpl components of the app
+
+Shinyapp- the overall product of user interface and server to produce results.
+
+
+
+
+10.
+
+library(pdftools)
+library(tidyr)
+library(tidytext)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+
+#dowloading pdf from online
+
+mytext=pdf_text(pdf = "https://pdf.usaid.gov/pdf_docs/PA00TNMJ.pdf")
+
+mytext
+
+
+
+
+
+11.
+
+mytext=as.data.frame(mytext)
+mytext$page=c(1:27)
+colnames(mytext)[which(names(mytext) == "mytext")] <- "armeniatext"
+
+
+
+12.
+#tokenizing
+mytext=mytext %>%
+  unnest_tokens(word,text)
+  
+#ridding stop words  
+data(stop_words)
+
+mytext <- mytext %>%
+  anti.join(stop_words)
+
+
+13.
+
+#word frequencies / most frequently used words
+data(stop_words)
+
+mytext <- mytext %>%
+count(word, sort = TRUE)
+head(hpfreq)
+
+
+14.
+
+
+hot100page <- "https://www.billboard.com/charts/hot-100"
+hot 100 <- read.html(hot100page)
+
+str
+
+
+15.
+
+#loadrvest
+library(rvest)
+library(dplyr)
+
+16.
+
+body_nodes <- hot 100
+html_node("body")
+body_nodes
+
+
+
+17. saved data. was not able to establish a .sta file. submitting what I have as I won't have wifi soon.
